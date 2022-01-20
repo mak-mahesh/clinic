@@ -14,7 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.makntosh.clinc.model.Patient;
 import com.makntosh.clinc.repository.PatientRepository;
-
+/**
+ * 
+ * @author Admin
+ * @version 1.0
+ * @since 2021
+ *
+ */
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class PatientController {
@@ -22,11 +28,19 @@ public class PatientController {
 	@Autowired
 	PatientRepository repo;
 	
+	/**
+	 * 
+	 * @return Return List of Patient object
+	 */
 	@GetMapping("/getPatient")
 	public List<Patient> getAllPatients(){
 		return repo.findAll();
 	}
 	
+	/**
+	 * 
+	 * @param patient - Patient object is passed to the method
+	 */
 	@PostMapping("/addPatient")
 	public void addPatient(@RequestBody Patient patient) {
 		repo.save(patient);
@@ -36,12 +50,18 @@ public class PatientController {
 	public void deletePatient(@PathVariable long id) {
 		repo.deleteById(id);
 	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	@GetMapping("/totalPatient")
 	public int totalPatient() {
 		return repo.getTotalPatients(); 
 	}
-	
+	/**
+	 * 
+	 * @return Total number of patients are returned
+	 */
 	@GetMapping("/totalPatientToday")
 	public int totalPatientToday() {
 		return repo.getTotalPatientsToday(); 
