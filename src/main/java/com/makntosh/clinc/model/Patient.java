@@ -22,6 +22,8 @@ public class Patient {
 	private String patientLname;
 	@Column(name = "age")
 	private int age;
+	@Column(name = "gender")
+	private String gender;
 	@Column(name = "pdate")
 	private Date pdate;
 	@Column(name = "symptoms")
@@ -69,6 +71,14 @@ public class Patient {
 	public void setAge(int age) {
 		this.age = age;
 	}
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public Date getPdate() {
 		return pdate;
 	}

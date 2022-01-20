@@ -36,4 +36,14 @@ public class PatientController {
 	public void deletePatient(@PathVariable long id) {
 		repo.deleteById(id);
 	}
+	
+	@GetMapping("/totalPatient")
+	public int totalPatient() {
+		return repo.getTotalPatients(); 
+	}
+	
+	@GetMapping("/totalPatientToday")
+	public int totalPatientToday() {
+		return repo.getTotalPatientsToday(); 
+	}
 }
