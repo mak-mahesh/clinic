@@ -1,8 +1,10 @@
 package com.makntosh.clinc.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.makntosh.clinc.model.MedicalRecord;
 import com.makntosh.clinc.model.Patient;
+import com.makntosh.clinc.model.PatientAllergy;
+import com.makntosh.clinc.repository.MedicalRecordRepository;
+import com.makntosh.clinc.repository.PatientAllergyRepository;
 import com.makntosh.clinc.repository.PatientRepository;
 /**
  * 
@@ -27,6 +33,12 @@ public class PatientController {
 
 	@Autowired
 	PatientRepository repo;
+	
+	@Autowired
+	MedicalRecordRepository medicalRecordRepo;
+	
+	@Autowired
+	PatientAllergyRepository allergyRepo;
 	
 	/**
 	 * 
@@ -65,5 +77,39 @@ public class PatientController {
 	@GetMapping("/totalPatientToday")
 	public int totalPatientToday() {
 		return repo.getTotalPatientsToday(); 
+	}
+	
+	/**
+	 * Get patient by ID with full details
+	 * @param patientId - Patient ID
+	 * @return Patient details or 404 if not found
+	 */
+	@GetMapping("/patient/{patientId}")
+	public ResponseEntity<Patient> getPatientById(@PathVariable long patientId) {
+		Optional<Patient> patient = repo.findById(patientId);
+		if (patient.isPresent()) {
+			return ResponseEntity.ok(patient.get());
+		}
+		return ResponseEntity.notFound().build();
+	}
+	
+	/**
+	 * Get complete medical history for a patient
+	 * @param patientId - Patient ID
+	 * @return List of medical records
+	 */
+	@GetMapping("/patient/{patientId}/medical-history")
+	public List<MedicalRecord> getPatientMedicalHistory(@PathVariable long patientId) {
+		return medicalRecordRepo.findByPatientId(patientId);
+	}
+	
+	/**
+	 * Get patient allergies
+	 * @param patientId - Patient ID
+	 * @return List of active allergies
+	 */
+	@GetMapping("/patient/{patientId}/allergies")
+	public List<PatientAllergy> getPatientAllergies(@PathVariable long patientId) {
+		return allergyRepo.findActiveAllergiesByPatientId(patientId);
 	}
 }
