@@ -20,7 +20,7 @@ import com.makntosh.clinc.model.MedicalRecord;
 import com.makntosh.clinc.repository.MedicalRecordRepository;
 
 /**
- * REST Controller for managing medical records
+ * REST Controller for managing medical records, a controller class
  * @author Admin
  * @version 1.0
  * @since 2021
