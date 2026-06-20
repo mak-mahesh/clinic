@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+/*Patient allergy info */
 @Entity
 @Table(name = "patient_allergy")
 public class PatientAllergy {
